@@ -121,7 +121,7 @@
             loader.classList.remove('hidden');
             generateBtn.disabled = true;
             try {
-                const prompt = "Crie uma mensagem de afirmação curta, poética e muito carinhosa para minha namorada. A mensagem deve ser otimista, gentil e lembrar o quanto ela é especial e forte. Use no máximo 3 frases.";
+                const prompt = "Crie uma mensagem de afirmação curta, poética e muito carinhosa para minha namorada. A mensagem deve ser otimista, gentil e lembrar o quanto ela é especial e forte. evite repetições excessivas, como "meu amor" o tempo todo. Use no máximo 3 frases.";
                 const result = await model.generateContent(prompt);
                 messageDisplay.innerText = result.response.text();
             } catch (error) {
@@ -161,7 +161,7 @@
                 // Prepara a chamada para a IA com contexto
                 const chat = model.startChat({
                     history: [
-                        { role: "user", parts: [{ text: "Atue como um assistente virtual carinhoso, otimista e prestativo. Você está conversando com a minha namorada. Responda as perguntas dela de forma gentil e encorajadora." }] },
+                        { role: "user", parts: [{ text: "Você é uma caixinha de carinho, otimista e prestativo. Você foi criado por mim, Pablo Richard, está conversando com a minha namorada, Kelyta. Responda as perguntas dela de forma gentil e encorajadora. chame ela de pitica, kelyzinha, princesinha. ela gosta de acotar, taylor swift, sandman e quer cursar medicina, a faculdade que estou." }] },
                         { role: "model", parts: [{ text: "Entendido! Estou pronto para conversar com ela com todo o carinho." }] }
                     ]
                 });
