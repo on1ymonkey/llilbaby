@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Seu Cantinho </title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Nunito', sans-serif; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.9); }
+        }
+        .animate-pulse-dot { animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .animate-pulse-dot:nth-child(2) { animation-delay: 0.2s; }
+        .animate-pulse-dot:nth-child(3) { animation-delay: 0.4s; }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.1), 0 8px 10px -6px rgba(236, 72, 153, 0.1); }
+        .soft-shadow-button { box-shadow: 0 4px 14px 0 rgba(251, 113, 133, 0.39); }
+        /* Esconde a barra de rolagem mas permite rolar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-pink-50 flex items-center justify-center min-h-screen">
+
+    <!-- Card Principal -->
+    <div class="bg-white w-full max-w-md mx-4 p-8 rounded-3xl soft-shadow text-center transition-all duration-500">
+        
+        <header class="flex items-center justify-center mb-6">
+            <h1 class="text-3xl font-bold text-pink-500">Cantinho de Carinho</h1>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 text-pink-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </header>
+
+        <div id="message-container" class="min-h-[120px] flex items-center justify-center bg-pink-50/50 p-6 rounded-2xl mb-6">
+            <div id="loader" class="hidden flex space-x-2">
+                <div class="w-3 h-3 bg-pink-400 rounded-full animate-pulse-dot"></div>
+                <div class="w-3 h-3 bg-pink-400 rounded-full animate-pulse-dot"></div>
+                <div class="w-3 h-3 bg-pink-400 rounded-full animate-pulse-dot"></div>
+            </div>
+            <p id="message-display" class="text-lg text-gray-600">Clique em "Gerar Afeto" para uma mensagem especial!</p>
+        </div>
+
+        <div class="space-y-4">
+            <button id="generate-btn" class="w-full flex items-center justify-center bg-gradient-to-br from-pink-400 to-rose-400 text-white font-bold py-4 px-6 rounded-full text-lg soft-shadow-button transition-all duration-300 ease-in-out hover:scale-105 hover:brightness-110 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.293 2.293a1 1 0 010 1.414L10 12l-2.293 2.293a1 1 0 01-1.414 0L4 12l2.293-2.293a1 1 0 011.414 0L10 10m5-7l2.293 2.293a1 1 0 010 1.414L12 15l-2.293 2.293a1 1 0 01-1.414 0L6 15l2.293-2.293a1 1 0 011.414 0L12 15m5-7l2.293 2.293a1 1 0 010 1.414L15 12l-2.293 2.293a1 1 0 01-1.414 0L9 12l2.293-2.293a1 1 0 011.414 0L15 10z" /></svg>
+                Gerar Afeto
+            </button>
+            <button id="open-chat-btn" class="w-full flex items-center justify-center bg-white text-pink-500 border-2 border-pink-300 font-bold py-3 px-6 rounded-full text-lg transition-all duration-300 ease-in-out hover:bg-pink-100 hover:border-pink-400 active:scale-95">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                Abrir um papo
+            </button>
+        </div>
+
+        <footer class="mt-8">
+            <p class="text-sm text-pink-300">Você é uma garota incrivel, lhe amo infinitamente! P.R </p>
+        </footer>
+    </div>
+
+    <!-- Modal de Chat (inicialmente escondido) -->
+    <div id="chat-modal" class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white w-full max-w-lg rounded-3xl soft-shadow flex flex-col" style="height: 80vh; max-height: 700px;">
+            <!-- Cabeçalho do Modal -->
+            <header class="flex items-center justify-between p-4 border-b border-gray-200">
+                <h2 class="text-xl font-bold text-pink-500">Pode perguntar o que quiser!</h2>
+                <button id="close-chat-btn" class="text-gray-400 hover:text-pink-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </header>
+            
+            <!-- Área do Chat -->
+            <div id="chat-area" class="flex-1 p-4 overflow-y-auto no-scrollbar space-y-4">
+                <!-- Mensagens do chat aparecerão aqui -->
+                <div class="flex justify-start"><div class="bg-pink-100 text-gray-700 p-3 rounded-2xl rounded-bl-none max-w-xs">Olá! Estou aqui para conversar. O que está no seu coração?</div></div>
+            </div>
+
+            <!-- Input de Mensagem -->
+            <footer class="p-4 border-t border-gray-200">
+                <form id="chat-form" class="flex items-center space-x-2">
+                    <input id="chat-input" type="text" placeholder="Digite sua mensagem..." class="flex-1 p-3 border-2 border-gray-200 rounded-full focus:border-pink-400 focus:ring-0 outline-none transition-colors">
+                    <button type="submit" class="bg-pink-500 text-white rounded-full p-3 hover:bg-pink-600 transition-colors active:scale-90 disabled:opacity-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" /></svg>
+                    </button>
+                </form>
+            </footer>
+        </div>
+    </div>
+
+    <script type="module">
+        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+        // --- Configuração da API ---
+        const API_KEY = "AIzaSyAoZokG6LviJEZJ02fYbc4u4KDgUlB788g";
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        // --- Elementos da Página Principal ---
+        const generateBtn = document.getElementById('generate-btn');
+        const messageDisplay = document.getElementById('message-display');
+        const loader = document.getElementById('loader');
+
+        // --- Elementos do Modal de Chat ---
+        const chatModal = document.getElementById('chat-modal');
+        const openChatBtn = document.getElementById('open-chat-btn');
+        const closeChatBtn = document.getElementById('close-chat-btn');
+        const chatArea = document.getElementById('chat-area');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const chatSubmitBtn = chatForm.querySelector('button');
+
+        // --- Lógica para Gerar Afirmação ---
+        generateBtn.addEventListener('click', async () => {
+            messageDisplay.classList.add('hidden');
+            loader.classList.remove('hidden');
+            generateBtn.disabled = true;
+            try {
+                const prompt = "Crie uma mensagem de afirmação curta, poética e muito carinhosa para minha namorada. A mensagem deve ser otimista, gentil e lembrar o quanto ela é especial e forte. Use no máximo 3 frases.";
+                const result = await model.generateContent(prompt);
+                messageDisplay.innerText = result.response.text();
+            } catch (error) {
+                console.error("Erro ao gerar afirmação:", error);
+                messageDisplay.innerText = "Ops! Ocorreu um pequeno erro. Tente novamente. ❤️";
+            } finally {
+                loader.classList.add('hidden');
+                messageDisplay.classList.remove('hidden');
+                generateBtn.disabled = false;
+            }
+        });
+
+        // --- Lógica para Abrir e Fechar o Modal de Chat ---
+        openChatBtn.addEventListener('click', () => chatModal.classList.remove('hidden'));
+        closeChatBtn.addEventListener('click', () => chatModal.classList.add('hidden'));
+        chatModal.addEventListener('click', (e) => {
+            if (e.target === chatModal) { // Fecha se clicar no fundo
+                chatModal.classList.add('hidden');
+            }
+        });
+
+        // --- Lógica do Chat ---
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userMessage = chatInput.value.trim();
+            if (!userMessage) return;
+
+            // Mostra a mensagem do usuário na tela
+            appendMessage(userMessage, 'user');
+            chatInput.value = '';
+            chatSubmitBtn.disabled = true;
+
+            // Mostra o loader para a resposta da IA
+            appendMessage('...', 'ai-loading');
+
+            try {
+                // Prepara a chamada para a IA com contexto
+                const chat = model.startChat({
+                    history: [
+                        { role: "user", parts: [{ text: "Atue como um assistente virtual carinhoso, otimista e prestativo. Você está conversando com a minha namorada. Responda as perguntas dela de forma gentil e encorajadora." }] },
+                        { role: "model", parts: [{ text: "Entendido! Estou pronto para conversar com ela com todo o carinho." }] }
+                    ]
+                });
+                const result = await chat.sendMessage(userMessage);
+                const aiResponse = result.response.text();
+                
+                // Remove o loader e mostra a resposta da IA
+                document.getElementById('ai-loader').remove();
+                appendMessage(aiResponse, 'ai');
+
+            } catch (error) {
+                console.error("Erro no chat:", error);
+                document.getElementById('ai-loader').remove();
+                appendMessage("Desculpe, tive um probleminha para pensar na resposta. Pode tentar de novo?", 'ai');
+            } finally {
+                chatSubmitBtn.disabled = false;
+            }
+        });
+
+        // Função auxiliar para adicionar mensagens na área de chat
+        function appendMessage(text, type) {
+            const messageWrapper = document.createElement('div');
+            const messageBubble = document.createElement('div');
+            
+            if (type === 'user') {
+                messageWrapper.className = 'flex justify-end';
+                messageBubble.className = 'bg-pink-500 text-white p-3 rounded-2xl rounded-br-none max-w-xs';
+            } else if (type === 'ai') {
+                messageWrapper.className = 'flex justify-start';
+                messageBubble.className = 'bg-pink-100 text-gray-700 p-3 rounded-2xl rounded-bl-none max-w-xs';
+            } else if (type === 'ai-loading') {
+                messageWrapper.className = 'flex justify-start';
+                messageBubble.id = 'ai-loader'; // ID para remover depois
+                messageBubble.className = 'p-3';
+                messageBubble.innerHTML = `<div class="flex space-x-1.5">
+                    <div class="w-2.5 h-2.5 bg-pink-300 rounded-full animate-pulse-dot"></div>
+                    <div class="w-2.5 h-2.5 bg-pink-300 rounded-full animate-pulse-dot"></div>
+                    <div class="w-2.5 h-2.5 bg-pink-300 rounded-full animate-pulse-dot"></div>
+                </div>`;
+            }
+            
+            if (type !== 'ai-loading') {
+                messageBubble.innerText = text;
+            }
+            
+            messageWrapper.appendChild(messageBubble);
+            chatArea.appendChild(messageWrapper);
+            chatArea.scrollTop = chatArea.scrollHeight; // Rola para a mensagem mais recente
+        }
+    </script>
+</body>
+</html>
